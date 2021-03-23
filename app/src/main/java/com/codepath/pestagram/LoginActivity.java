@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnLogin;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,22 +51,26 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user " + username);
-        ParseUser.logInInBackground(username,password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if(e != null)
-                {
-                    Log.e(TAG, "Issues with login", e);
-                    Toast.makeText(LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT).show();
-                    return;
+            ParseUser.logInInBackground (username, password, new LogInCallback () {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        Log.e (TAG, "Issues with login", e);
+                        Toast.makeText (LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT).show ();
+                        return;
+                    }
+                    //TODO: navigate to the main activity if the user has signed in properly
+                    goMainActivity ();
+                    Toast.makeText (LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show ();
                 }
-                //TODO: navigate to the main activity if the user has signed in properly
-                goMainActivity();
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-            }
 
-        });
+
+            });
+
     }
+
+
+
 
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
